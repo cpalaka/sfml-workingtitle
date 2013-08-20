@@ -19,8 +19,11 @@ void Game::gameloop()
 {
 	gameWindow.clear(sf::Color(255,255,255));
 
+	sf::Event evt;
+	gameWindow.pollEvent(evt);
+
 	update();
-	currentlevel->draw(gameWindow);
+	//currentlevel->draw(gameWindow);
 	
 	gameWindow.display();
 }
@@ -31,5 +34,5 @@ void Game::update()
 
 void Game::render()
 {
-	currentlevel->draw(gameWindow);
+	//currentlevel->draw(gameWindow);
 }

@@ -9,6 +9,7 @@
 #include "staticEntity.h"
 
 enum leveltype {Menu, Stage1 };
+const b2Vec2 gravity(0.0f, 9.8f);
 
 class Level {
 public:
@@ -23,7 +24,7 @@ private:
 	std::vector<staticEntity*> sentitylist;
 	std::vector<Enemy*> enemylist;
 	Player* player;
-	b2World b2world;
+	b2World* b2world;
 };
 
 #endif LEVEL_H

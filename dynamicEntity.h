@@ -4,9 +4,8 @@
 #include "Drawable.h"
 
 class dynamicEntity : public Drawable {
-
 public:
-
+	dynamicEntity();
 private:
 };
 

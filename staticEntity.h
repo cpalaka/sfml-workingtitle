@@ -5,7 +5,7 @@
 
 class staticEntity : public Drawable {
 public:
-	staticEntity(std::string);
+	staticEntity(std::string, int x, int y);
 protected:
 	b2Body* body;
 };
