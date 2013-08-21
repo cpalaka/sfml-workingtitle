@@ -11,11 +11,14 @@
 enum leveltype {Menu, Stage1 };
 const b2Vec2 gravity(0.0f, 9.8f);
 
+
 class Level {
 public:
 	Level();
 	void draw(sf::RenderWindow& window);
 	void setLevel(leveltype l);
+	void update(double);
+	void checkInput(sf::Event);
 private:
 	leveltype ltype;
 	sf::Texture bgtexture;

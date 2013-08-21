@@ -17,7 +17,10 @@ void Drawable::draw(sf::RenderWindow& window)
 
 void Drawable::setPosition(int _x, int _y)
 {
+	//position is set in center of sprite, in pixels
 	x = _x;
 	y = _y;
-	sprite.setPosition(x, y);
+	sf::IntRect rect = sprite.getTextureRect();
+	//adjust to left top corner of sprite
+	sprite.setPosition(x - rect.width/2, y - rect.height/2);
 }

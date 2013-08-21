@@ -95,6 +95,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="staticEntity.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="resources\levelinfo\level1.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

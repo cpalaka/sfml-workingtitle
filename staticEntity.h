@@ -2,10 +2,16 @@
 #define STATICENTITY_H
 
 #include "Drawable.h"
+const int scale = 30;
+const float defaultfriction = 6.f;
 
 class staticEntity : public Drawable {
 public:
 	staticEntity(std::string, int x, int y);
+	void setb2Object(b2World* world, 
+					std::vector<b2Vec2> shape, 
+					int verticecount);
+					
 protected:
 	b2Body* body;
 };

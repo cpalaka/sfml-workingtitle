@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "AnimationObject.h"
 #include "Level.h"
+#include <chrono>
 
 const static int windowX = 660;
 const static int windowY = 450;
@@ -15,11 +16,10 @@ public:
 	Game();
 	void start();
 	void gameloop();
-	void update();
-	void render();
 private:
 	sf::RenderWindow gameWindow;
 	Level* currentlevel;
+	double deltatime;
 
 };
 
