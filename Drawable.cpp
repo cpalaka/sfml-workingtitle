@@ -15,7 +15,7 @@ void Drawable::draw(sf::RenderWindow& window)
 	window.draw(sprite);
 }
 
-void Drawable::setPosition(int _x, int _y)
+void Drawable::setPosition(float _x, float _y)
 {
 	//position is set in center of sprite, in pixels
 	x = _x;

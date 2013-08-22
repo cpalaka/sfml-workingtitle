@@ -17,9 +17,11 @@ void dynamicEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int v
 
 	b2Vec2* arr = new b2Vec2[verticecount];
 	auto itr = shape.begin();
-	for(int i = 0; i<verticecount; ++i)
+	int i = 0;
+	for(itr; itr != shape.end(); ++itr)
 	{
-		arr[i] = (*itr);
+		arr[i].Set((*itr).x, (*itr).y);
+		++i;
 	}
 
 	b2PolygonShape pshape;
@@ -30,4 +32,14 @@ void dynamicEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int v
 	fd.density = density;
 	fd.friction = friction;
 	body->CreateFixture(&fd);
+}
+
+void dynamicEntity::update(double t)
+{
+	float x = body->GetPosition().x*scale;
+	float y = body->GetPosition().y*scale;
+
+	sf::IntRect rect = sprite.getTextureRect();
+	std::cout<<"("<<x<<","<<y + rect.height/2<<")"<<std::endl;
+	setPosition(x, y);
 }

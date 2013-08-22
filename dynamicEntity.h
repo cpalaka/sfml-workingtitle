@@ -2,7 +2,7 @@
 #define DYAMICENTITY_H
 
 #include "Drawable.h"
-const int scale = 30;
+#include <iostream>
 
 class dynamicEntity : public Drawable {
 public:
@@ -13,6 +13,7 @@ public:
 					float friction,
 					float density,
 					bool rot);
+	void update(double);
 protected:
 	b2Body* body;
 };

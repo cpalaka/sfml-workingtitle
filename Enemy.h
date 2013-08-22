@@ -3,7 +3,7 @@
 
 #include "dynamicEntity.h"
 
-class Enemy : public dynamicEntity {
+class Enemy{
 public:
 	Enemy();
 private:

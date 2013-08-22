@@ -2,7 +2,6 @@
 
 Level::Level()
 {
-	ltype = Menu;
 	b2world = new b2World(gravity);
 }
 
@@ -19,9 +18,30 @@ void Level::setLevel(leveltype l)
 		break;
 	case Stage1:
 		//load all staticobjects (platforms)
-		//load all dynamicobjects to be used (guns)
+		staticEntity* ground = new staticEntity("resources/graphics/Stage1/ground.png", 330, 350);
+		std::vector<b2Vec2> v;
+		v.push_back(b2Vec2(0.f,0.f));
+		v.push_back(b2Vec2(550.f/scale, 0));
+		v.push_back(b2Vec2(550.f/scale, 150.f/scale));
+		v.push_back(b2Vec2(0, 150.f/scale));
+
+		ground->setb2Object(b2world,v , 4);
+		sentitylist.push_back(ground);
+
+		//load all dynamicobjects to be used (guns etc)
+		dynamicEntity* box = new dynamicEntity("resources/graphics/Stage1/box.png", 330, 200);
+		std::vector<b2Vec2> v1;
+		v1.push_back(b2Vec2(0, 0));
+		v1.push_back(b2Vec2(100.f/scale, 0));
+		v1.push_back(b2Vec2(100.f/scale, 100.f/scale));
+		v1.push_back(b2Vec2(0, 100.f/scale));
+
+		box->setb2Object(b2world, v1, 4, .8f, 1.0f, true);
+		dentitylist.push_back(box);
+
 		//create enemies
 		//create player
+		
 
 		break;
 	}
@@ -29,7 +49,14 @@ void Level::setLevel(leveltype l)
 
 void Level::update(double delta)
 {
+	//b2world->ClearForces();
+	b2world->Step(delta/1000, 8, 3);
 
+	auto itr = dentitylist.begin();
+	for(itr; itr != dentitylist.end(); ++itr)
+	{
+		(*itr)->update(delta);
+	}
 }
 
 void Level::checkInput(sf::Event evt)
@@ -51,6 +78,16 @@ void Level::draw(sf::RenderWindow& window)
 	{
 		window.draw(bgsprite);
 	} else {
+		auto itr = sentitylist.begin();
+		for(itr; itr != sentitylist.end(); ++itr)
+		{
+			(*itr)->draw(window);
+		}
 
+		auto ditr = dentitylist.begin();
+		for(ditr; ditr != dentitylist.end(); ++ditr)
+		{
+			(*ditr)->draw(window);
+		}
 	}
 }

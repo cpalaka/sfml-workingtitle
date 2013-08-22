@@ -2,7 +2,7 @@
 #define STATICENTITY_H
 
 #include "Drawable.h"
-const int scale = 30;
+#include <iostream>
 const float defaultfriction = 6.f;
 
 class staticEntity : public Drawable {

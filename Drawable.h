@@ -5,17 +5,18 @@
 #include <SFML\Window.hpp>
 #include <Box2D\Box2D.h>
 
+const float scale = 30.f;
 class Drawable {
 public:
 	Drawable();
 	void setTexture(std::string s);
 	void draw(sf::RenderWindow& window);
-	void setPosition(int, int);
+	void setPosition(float,float);
 protected:
 	sf::Texture texture;
 	sf::Sprite sprite;
-	int x;
-	int y;
+	float x;
+	float y;
 };
 
 #endif DRAWABLE_H
