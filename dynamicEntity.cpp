@@ -12,6 +12,7 @@ void dynamicEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int v
 	bd.position.Set(x/scale, y/scale);
 	bd.type = b2_dynamicBody;
 	bd.fixedRotation = rot;
+	
 
 	body = world->CreateBody(&bd);
 
@@ -25,6 +26,7 @@ void dynamicEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int v
 	}
 
 	b2PolygonShape pshape;
+	//pshape.SetAsBox(100.f/(2*scale), 100.f/(2*scale));
 	pshape.Set(arr, verticecount);
 
 	b2FixtureDef fd;
@@ -36,10 +38,10 @@ void dynamicEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int v
 
 void dynamicEntity::update(double t)
 {
-	float x = body->GetPosition().x*scale;
-	float y = body->GetPosition().y*scale;
+	float x = body->GetPosition().x;
+	float y = body->GetPosition().y;
 
 	sf::IntRect rect = sprite.getTextureRect();
-	std::cout<<"("<<x<<","<<y + rect.height/2<<")"<<std::endl;
-	setPosition(x, y);
+	//std::cout<<"("<<x<<","<<y<<")"<<std::endl;
+	setPosition(x*scale, y*scale);
 }

@@ -7,7 +7,7 @@ const float defaultfriction = 6.f;
 
 class staticEntity : public Drawable {
 public:
-	staticEntity(std::string, int x, int y);
+	staticEntity(std::string, float x, float y);
 	void setb2Object(b2World* world, 
 					std::vector<b2Vec2> shape, 
 					int verticecount);
