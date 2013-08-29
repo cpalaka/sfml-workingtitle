@@ -18,6 +18,7 @@ public:
 	void gameloop();
 private:
 	sf::RenderWindow gameWindow;
+	sf::View view;
 	Level* currentlevel;
 	double deltatime;
 

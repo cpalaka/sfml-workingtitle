@@ -20,9 +20,6 @@ public:
 
 	int xpos;
 	int ypos;
-	int position;//0 right, 1 left
-	bool isActive;
-	bool isJumping;
 private:
 	std::map<std::string, Animation*> animlist;
 	std::string currentAnim;

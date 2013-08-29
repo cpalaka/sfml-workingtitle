@@ -16,13 +16,14 @@ void Level::setLevel(leveltype l)
 		bgsprite.setTexture(bgtexture);
 		bgsprite.setPosition(0,0);
 		break;
+
 	case Stage1:
 		//load all staticobjects (platforms)
 		staticEntity* ground = new staticEntity("resources/graphics/Stage1/ground.png",312.f, 350.f);
 		std::vector<b2Vec2> v;
 		
 		v.push_back(b2Vec2(275.f/scale,75.f/scale));
-	v.push_back(b2Vec2(-275.f/scale, 75.f/scale));
+		v.push_back(b2Vec2(-275.f/scale, 75.f/scale));
 		v.push_back(b2Vec2(-275.f/scale, -75.f/scale));
 		v.push_back(b2Vec2(275.f/scale, -75.f/scale));
 		
@@ -30,16 +31,14 @@ void Level::setLevel(leveltype l)
 		sentitylist.push_back(ground);
 		
 		//load all dynamicobjects to be used (guns etc)
-		dynamicEntity* box = new dynamicEntity("resources/graphics/Stage1/box.png", 0, 100);
+		dynamicEntity* box = new dynamicEntity("resources/graphics/Stage1/box.png", 200, 100);
 		std::vector<b2Vec2> v1;
 		
 		v1.push_back(b2Vec2(50.f/scale, 50.f/scale));
 		v1.push_back(b2Vec2(-50.f/scale, 50.f/scale)); 
 		v1.push_back(b2Vec2(-50.f/scale, -50.f/scale));
-	v1.push_back(b2Vec2(50.f/scale, -50.f/scale));
+		v1.push_back(b2Vec2(50.f/scale, -50.f/scale));
 		
-		
-
 		box->setb2Object(b2world, v1, 4, .8f, 1.0f, true);
 		dentitylist.push_back(box);
 
@@ -51,16 +50,27 @@ void Level::setLevel(leveltype l)
 	}
 }
 
-void Level::update(double delta)
+void Level::update(double delta, sf::Event& evt, sf::View& v)
 {
-	//b2world->ClearForces();
+	//step an iteration of box2d world
 	b2world->Step(delta/1000, 8, 3);
 
+	//set view
+	//remember to change from first dynamic entity to the player position
+	if(ltype != Menu)
+		v.setCenter(dentitylist.at(0)->body->GetWorldCenter().x*scale,dentitylist.at(0)->body->GetWorldCenter().y*scale);
+
+	//iterate through dentity list and update
 	auto itr = dentitylist.begin();
 	for(itr; itr != dentitylist.end(); ++itr)
 	{
 		(*itr)->update(delta);
 	}
+
+	//update player
+	player->update(evt, delta);
+
+	//update enemies
 }
 
 void Level::checkInput(sf::Event evt)

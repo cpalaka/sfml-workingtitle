@@ -1,10 +1,7 @@
 #include "AnimationObject.h"
 
 AnimationObject::AnimationObject() :
-	anim_count(0),
-	position(0),
-	isActive(false),
-	isJumping(true)
+	anim_count(0)
 {
 	currentAnim = "";
 	xpos = 0;

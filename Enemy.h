@@ -1,9 +1,9 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "dynamicEntity.h"
+#include "Player.h"
 
-class Enemy{
+class Enemy {
 public:
 	Enemy();
 private:

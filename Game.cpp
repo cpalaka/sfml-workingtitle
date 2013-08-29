@@ -6,6 +6,8 @@ Game::Game()
 	currentlevel = new Level();
 	currentlevel->setLevel(Stage1);
 	deltatime = 0;
+	view.reset(sf::FloatRect(0,0,440,300));
+	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 }
 
 void Game::start()
@@ -26,10 +28,13 @@ void Game::gameloop()
 	gameWindow.pollEvent(evt);
 	if(evt.type == sf::Event::Closed) gameWindow.close();
 
-	currentlevel->checkInput(evt);
-	currentlevel->update(deltatime);
-	currentlevel->draw(gameWindow);
 	
+	currentlevel->checkInput(evt);
+	currentlevel->update(deltatime, evt, view);
+	currentlevel->draw(gameWindow);
+
+	if(currentlevel->ltype != Menu) gameWindow.setView(view);
+
 	gameWindow.display();
 
 	//calculate deltatime for one iteration of gameloop

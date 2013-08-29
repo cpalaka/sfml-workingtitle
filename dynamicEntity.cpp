@@ -1,5 +1,6 @@
 #include "dynamicEntity.h"
 
+
 dynamicEntity::dynamicEntity(std::string s, int _x, int _y)
 {
 	setTexture(s);
@@ -44,4 +45,9 @@ void dynamicEntity::update(double t)
 	sf::IntRect rect = sprite.getTextureRect();
 	//std::cout<<"("<<x<<","<<y<<")"<<std::endl;
 	setPosition(x*scale, y*scale);
+}
+
+void dynamicEntity::setDrawableNull()
+{
+
 }

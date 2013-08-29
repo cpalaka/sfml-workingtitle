@@ -14,8 +14,9 @@ public:
 					float density,
 					bool rot);
 	void update(double);
-protected:
 	b2Body* body;
+protected:
+	
 };
 
 #endif DYNAMICENTITY_H;
