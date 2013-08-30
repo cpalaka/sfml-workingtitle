@@ -18,7 +18,6 @@ public:
 	void draw(sf::RenderWindow& window);
 	void setLevel(leveltype l); 
 	void update(double, sf::Event&, sf::View&);
-	void checkInput(sf::Event);
 	leveltype ltype;
 private:
 	

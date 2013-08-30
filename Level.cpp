@@ -3,6 +3,7 @@
 Level::Level()
 {
 	b2world = new b2World(gravity);
+	player = NULL;
 }
 
 void Level::setLevel(leveltype l)
@@ -31,50 +32,25 @@ void Level::setLevel(leveltype l)
 		sentitylist.push_back(ground);
 		
 		//load all dynamicobjects to be used (guns etc)
-		dynamicEntity* box = new dynamicEntity("resources/graphics/Stage1/box.png", 200, 100);
-		std::vector<b2Vec2> v1;
 		
-		v1.push_back(b2Vec2(50.f/scale, 50.f/scale));
-		v1.push_back(b2Vec2(-50.f/scale, 50.f/scale)); 
-		v1.push_back(b2Vec2(-50.f/scale, -50.f/scale));
-		v1.push_back(b2Vec2(50.f/scale, -50.f/scale));
-		
-		box->setb2Object(b2world, v1, 4, .8f, 1.0f, true);
-		dentitylist.push_back(box);
 
 		//create enemies
 		//create player
-		
+		player = new Player(100, 100);
+		std::vector<b2Vec2> v2;
+		v2.push_back(b2Vec2(15.f/scale,30.f/scale));
+		v2.push_back(b2Vec2(-15.f/scale,30.f/scale));
+		v2.push_back(b2Vec2(-15.f/scale,-30.f/scale));
+		v2.push_back(b2Vec2(15.f/scale,-30.f/scale));
 
+		player->setb2Object(b2world, v2, 4, 0.8f, 1.0f, true);
 		break;
 	}
 }
 
 void Level::update(double delta, sf::Event& evt, sf::View& v)
 {
-	//step an iteration of box2d world
-	b2world->Step(delta/1000, 8, 3);
 
-	//set view
-	//remember to change from first dynamic entity to the player position
-	if(ltype != Menu)
-		v.setCenter(dentitylist.at(0)->body->GetWorldCenter().x*scale,dentitylist.at(0)->body->GetWorldCenter().y*scale);
-
-	//iterate through dentity list and update
-	auto itr = dentitylist.begin();
-	for(itr; itr != dentitylist.end(); ++itr)
-	{
-		(*itr)->update(delta);
-	}
-
-	//update player
-	player->update(evt, delta);
-
-	//update enemies
-}
-
-void Level::checkInput(sf::Event evt)
-{
 	if(ltype == Menu)
 	{
 		//if spacebar is pressed in menu, start game
@@ -82,7 +58,25 @@ void Level::checkInput(sf::Event evt)
 			if(evt.key.code == sf::Keyboard::Space)
 				setLevel(Stage1);
 	} else {
+		//step an iteration of box2d world
+		b2world->Step(delta/1000, 8, 3);
 
+		//set view
+		//remember to change from first dynamic entity to the player position
+		
+		v.setCenter(player->anim.xpos+20, player->anim.ypos+30);
+
+		//iterate through dentity list and update
+		auto itr = dentitylist.begin();
+		for(itr; itr != dentitylist.end(); ++itr)
+		{
+			(*itr)->update(delta);
+		}
+	
+		//update player
+		player->Player::update(evt, delta);
+
+		//update enemies
 	}
 }
 
@@ -103,5 +97,6 @@ void Level::draw(sf::RenderWindow& window)
 		{
 			(*ditr)->draw(window);
 		}
+		player->Player::draw(window);
 	}
 }

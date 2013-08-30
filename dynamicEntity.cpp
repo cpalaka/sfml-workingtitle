@@ -46,8 +46,3 @@ void dynamicEntity::update(double t)
 	//std::cout<<"("<<x<<","<<y<<")"<<std::endl;
 	setPosition(x*scale, y*scale);
 }
-
-void dynamicEntity::setDrawableNull()
-{
-
-}

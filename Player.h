@@ -9,8 +9,12 @@ public:
 	Player(int, int);
 	void update(sf::Event&, float);
 	void draw(sf::RenderWindow&);
-private:
+	void setb2Object(b2World*, std::vector<b2Vec2>, int, float, float, bool);
 	AnimationObject anim;
+private:
+	sf::Texture walkleft, walkright;
+	bool onGround;
+	bool dir[4];//up down left right
 };
 
 #endif PLAYER_H

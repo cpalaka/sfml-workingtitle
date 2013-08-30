@@ -28,8 +28,6 @@ void Game::gameloop()
 	gameWindow.pollEvent(evt);
 	if(evt.type == sf::Event::Closed) gameWindow.close();
 
-	
-	currentlevel->checkInput(evt);
 	currentlevel->update(deltatime, evt, view);
 	currentlevel->draw(gameWindow);
 

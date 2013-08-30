@@ -10,7 +10,7 @@
 class AnimationObject {
 public:
 	AnimationObject();
-	void addAnimation(sf::Texture&, std::string, int, int);
+	void addAnimation(sf::Texture&, std::string, int no_of_frames, int animtype);
 	void update(double);
 	void setCurrentAnim(std::string);
 	void draw(sf::RenderWindow&);
@@ -18,8 +18,8 @@ public:
 	void setFreeze(std::string, int); //freeze animation at framenumberv
 	std::string getCurrentAnim();
 
-	int xpos;
-	int ypos;
+	float xpos;
+	float ypos;
 private:
 	std::map<std::string, Animation*> animlist;
 	std::string currentAnim;
