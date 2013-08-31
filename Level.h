@@ -7,10 +7,18 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "staticEntity.h"
+#include "MyContactListener.h"
 
 enum leveltype {Menu, Stage1};
 const b2Vec2 gravity(0.0f, 9.8f);
 
+const static uint16 platform = 0x0001;
+const static uint16 playr =0x0002;
+const static uint16 enemy =0x0004;
+const static uint16 gun =0x0008;
+const static uint16 bullet =0x0010;
+const static uint16 playerSensor =0x0020;
+const static uint16 enemySensor =0x0040;
 
 class Level {
 public:
@@ -29,6 +37,7 @@ private:
 	std::vector<Enemy*> enemylist;
 	Player* player;
 	b2World* b2world;
+	MyContactListener myContactListener;
 };
 
 #endif LEVEL_H

@@ -10,7 +10,9 @@ public:
 	staticEntity(std::string, float x, float y);
 	void setb2Object(b2World* world, 
 					std::vector<b2Vec2> shape, 
-					int verticecount);
+					int verticecount,
+					uint16 categoryBits,
+					uint16 maskBits);
 					
 protected:
 	b2Body* body;

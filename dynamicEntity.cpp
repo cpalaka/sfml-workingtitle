@@ -7,7 +7,7 @@ dynamicEntity::dynamicEntity(std::string s, int _x, int _y)
 	setPosition(_x, _y);
 }
 
-void dynamicEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int verticecount, float friction, float density, bool rot)
+void dynamicEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int verticecount, float friction, float density, bool rot, uint16 categoryBits, uint16 maskBits)
 {
 	b2BodyDef bd;
 	bd.position.Set(x/scale, y/scale);
@@ -34,7 +34,10 @@ void dynamicEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int v
 	fd.shape = &pshape;
 	fd.density = density;
 	fd.friction = friction;
+	fd.filter.categoryBits = categoryBits;
+	fd.filter.maskBits = maskBits;
 	body->CreateFixture(&fd);
+	body->SetUserData(this);
 }
 
 void dynamicEntity::update(double t)

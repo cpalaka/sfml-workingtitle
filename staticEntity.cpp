@@ -6,7 +6,7 @@ staticEntity::staticEntity(std::string s, float _x, float _y)
 	setPosition(_x, _y);
 }
 
-void staticEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int verticecount)
+void staticEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int verticecount, uint16 categoryBits, uint16 maskBits)
 {
 	b2BodyDef bd;
 	bd.position.Set(x/scale, y/scale);
@@ -32,21 +32,12 @@ void staticEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int ve
 	b2FixtureDef fd;
 	fd.shape = &pshape;
 	fd.density = 0;
+	//fd.restitution = 1.f;
 	fd.friction = defaultfriction;
+	fd.filter.categoryBits = categoryBits;
+	fd.filter.maskBits = maskBits;
+	fd.userData = this;
 	body->CreateFixture(&fd);
-
 	
-	sf::IntRect rect = sprite.getTextureRect();
-	b2Vec2 center = body->GetWorldCenter();
-
-	b2Vec2 topleft;
-	topleft.x = 2;
-	topleft.y = 9.6667;
-	b2Vec2 local = body->GetLocalPoint(topleft);
-	//std::cout<<local.x<<" "<<local.y<<std::endl;
-	
-	//std::cout<<center.x<<" "<<center.y<<std::endl;
-	//std::cout<<center.x - (rect.width/2)/30<<" "<<center.y - (rect.height/2)/30<<std::endl;
-	//std::cout<<rect.left/30<<" "<<rect.top/30<<std::endl;
-	
+	body->SetUserData(this);
 }

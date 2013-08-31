@@ -33,16 +33,16 @@ void Player::update(sf::Event& evt, float delta)
 	{
 		switch(evt.key.code)
 		{
-		case sf::Keyboard::W:
+		case sf::Keyboard::Up:
 			dir[0] = true;
 			break;
-		case sf::Keyboard::S:
+		case sf::Keyboard::Down:
 			dir[1] = true;
 			break;
-		case sf::Keyboard::A:
+		case sf::Keyboard::Left:
 			dir[2] = true;
 			break;
-		case sf::Keyboard::D:
+		case sf::Keyboard::Right:
 			dir[3] = true;
 			break;
 		}
@@ -52,35 +52,35 @@ void Player::update(sf::Event& evt, float delta)
 	{
 		switch(evt.key.code)
 		{
-		case sf::Keyboard::W:
+		case sf::Keyboard::Up:
 			dir[0] = false;
 			break;
-		case sf::Keyboard::S:
+		case sf::Keyboard::Down:
 			dir[1] = false;
 			break;
-		case sf::Keyboard::A:
+		case sf::Keyboard::Left:
 			dir[2] = false;
 			break;
-		case sf::Keyboard::D:
+		case sf::Keyboard::Right:
 			dir[3] = false;
 			break;
 		}
 	}
 
-	//if(dir[4] && 
+	
+	if(dir[3] && onGround) body->SetLinearVelocity(b2Vec2(10.f, 0));
+	if(dir[2] && onGround) body->SetLinearVelocity(b2Vec2(-10.f, 0));
+
 	//std::cout<<dir[0]<<" "<<dir[1]<<" "<<dir[2]<<" "<<dir[3]<<" "<<std::endl;
 	//handle shooting
-	if(evt.type == sf::Event::MouseButtonPressed)
-	{
-	}
-
 	
 	anim.xpos = body->GetWorldCenter().x*scale - 20;
 	anim.ypos = body->GetWorldCenter().y*scale - 30;
+	
 
 }
 
-void Player::setb2Object(b2World* world, std::vector<b2Vec2> shape, int verticecount, float friction, float density, bool rot)
+void Player::setb2Object(b2World* world, std::vector<b2Vec2> shape, int verticecount, float friction, float density, bool rot, uint16 categoryBits, uint16 maskBits)
 {
 	b2BodyDef bd;
 	bd.position.Set((anim.xpos + 20)/scale, (anim.ypos + 30)/scale);
@@ -100,14 +100,35 @@ void Player::setb2Object(b2World* world, std::vector<b2Vec2> shape, int verticec
 	}
 
 	b2PolygonShape pshape;
-	//pshape.SetAsBox(100.f/(2*scale), 100.f/(2*scale));
 	pshape.Set(arr, verticecount);
 
 	b2FixtureDef fd;
 	fd.shape = &pshape;
 	fd.density = density;
 	fd.friction = friction;
+	fd.userData = this;
+	fd.filter.categoryBits = categoryBits;
+	fd.filter.maskBits = maskBits;
 	body->CreateFixture(&fd);
+	body->SetUserData(this);
+}
+
+void Player::setSensor(b2World* world, uint16 categoryBits, uint16 maskBits)
+{
+
+	b2PolygonShape pshape;
+	pshape.SetAsBox(39.f/(2*scale), 5.f/(2*scale), b2Vec2(0, 30.f/scale), 0);
+
+	b2FixtureDef fd;
+	fd.shape = &pshape;
+	fd.density = 0.f;
+	fd.filter.categoryBits = categoryBits;
+	fd.filter.maskBits = maskBits;
+	fd.isSensor = true;
+	fd.userData = this;
+	
+	body->CreateFixture(&fd);
+	body->SetUserData(this);
 }
 
 void Player::draw(sf::RenderWindow& window)

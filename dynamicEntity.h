@@ -12,7 +12,9 @@ public:
 					int verticecount,
 					float friction,
 					float density,
-					bool rot);
+					bool rot,
+					uint16 categoryBits,
+					uint16 maskBits);
 	void update(double);
 	b2Body* body;
 protected:
