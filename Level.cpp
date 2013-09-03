@@ -28,7 +28,7 @@ void Level::setLevel(leveltype l)
 		v.push_back(b2Vec2(-275.f/scale, -75.f/scale));
 		v.push_back(b2Vec2(275.f/scale, -75.f/scale));
 		
-		ground->setb2Object(b2world,v , 4, platform, playr|playerSensor);
+		ground->setb2Object(b2world, v, 4, platform, playr|playerSensor);
 		sentitylist.push_back(ground);
 		
 		//load all dynamicobjects to be used (guns etc)
@@ -43,7 +43,7 @@ void Level::setLevel(leveltype l)
 		v2.push_back(b2Vec2(-15.f/scale,-30.f/scale));
 		v2.push_back(b2Vec2(15.f/scale,-30.f/scale));
 
-		player->setb2Object(b2world, v2, 4, 0.f, 1.0f, true, playr, platform);
+		player->setb2Object(b2world, v2, 4, 1.5f, 3.0f, true, playr, platform);
 
 		player->setSensor(b2world,playerSensor, platform|enemy);
 		b2world->SetContactListener(&myContactListener);

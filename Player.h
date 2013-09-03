@@ -16,6 +16,8 @@ public:
 	bool onGround;
 private:
 	sf::Texture walkleft, walkright;
+	b2Fixture* sensor;
+	bool isJumping;
 	bool dir[4];//up down left right
 };
 

@@ -15,12 +15,12 @@ void MyContactListener::BeginContact(b2Contact* contact)
 
 		if(fixA->IsSensor())
 		{
-			Player* player = static_cast<Player*>(fixA->GetUserData());
+			Player* player = static_cast<Player*>(fixA->GetBody()->GetUserData());
 			player->onGround = true;
 		}
 		if(fixB->IsSensor())
 		{
-			Player* player = static_cast<Player*>(fixB->GetUserData());
+			Player* player = static_cast<Player*>(fixB->GetBody()->GetUserData());
 			player->onGround = true;
 		}
 	}
@@ -39,17 +39,34 @@ void MyContactListener::EndContact(b2Contact* contact)
 		b2Fixture* fixA = contact->GetFixtureA();
 		b2Fixture* fixB = contact->GetFixtureB();
 
+		void* bodyUserData; 
+		//player body fixture
+		/*
+		if((bodyUserData = fixA->GetUserData()) == (void *)1)
+		{
+			Player* p = static_cast<Player*>(fixA->GetBody()->GetUserData());
+			p->onGround = false;
+		}
+		
+		if((bodyUserData = fixB->GetUserData()) == (void* )1)
+		{
+			Player* p = static_cast<Player*>(fixB->GetBody()->GetUserData());
+			p->onGround = false;
+		}
+		*/
+		
 		if(fixA->IsSensor())
 		{
 			Player* player = static_cast<Player*>(fixA->GetUserData());
 			player->onGround = false;
-			//std::cout<<"INAIR"<<std::endl;
+			std::cout<<"INAIR(contactlistener)"<<std::endl;
 		}
 		if(fixA->IsSensor())
 		{
 			Player* player = static_cast<Player*>(fixB->GetUserData());
 			player->onGround = false;
-			//std::cout<<"INAIR"<<std::endl;
+			std::cout<<"INAIR(contactlistener)"<<std::endl;
 		}
+		
 	}
 }

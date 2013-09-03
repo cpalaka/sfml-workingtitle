@@ -6,7 +6,7 @@ Game::Game()
 	currentlevel = new Level();
 	currentlevel->setLevel(Stage1);
 	deltatime = 0;
-	view.reset(sf::FloatRect(0,0,440,300));
+	view.reset(sf::FloatRect(0,0,660,450));
 	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 }
 

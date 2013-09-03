@@ -32,11 +32,10 @@ void staticEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int ve
 	b2FixtureDef fd;
 	fd.shape = &pshape;
 	fd.density = 0;
-	//fd.restitution = 1.f;
-	fd.friction = defaultfriction;
+	fd.friction = 1.f;
 	fd.filter.categoryBits = categoryBits;
 	fd.filter.maskBits = maskBits;
-	fd.userData = this;
+	fd.userData = (void*)2;
 	body->CreateFixture(&fd);
 	
 	body->SetUserData(this);

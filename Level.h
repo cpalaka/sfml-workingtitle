@@ -10,7 +10,7 @@
 #include "MyContactListener.h"
 
 enum leveltype {Menu, Stage1};
-const b2Vec2 gravity(0.0f, 9.8f);
+const b2Vec2 gravity(0.0f, 12.f);
 
 const static uint16 platform = 0x0001;
 const static uint16 playr =0x0002;

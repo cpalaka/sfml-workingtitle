@@ -2,7 +2,8 @@
 
 Player::Player(int _x, int _y) :
 	dynamicEntity("resources/graphics/Stage1/box.png", _x, _y),
-	onGround(false)
+	onGround(false),
+	isJumping(false)
 {
 	dir[0] = false;
 	dir[1] = false;
@@ -18,7 +19,7 @@ Player::Player(int _x, int _y) :
 	anim.addAnimation(walkright, "walkright", 5, 0);
 
 	//sf::Texture walkleft;
-	walkleft.loadFromFile("resources/graphics/Player/player_run_right.png");
+	walkleft.loadFromFile("resources/graphics/Player/player_run_left.png");
 	anim.addAnimation(walkleft, "walkleft", 5, 0);
 
 	anim.setCurrentAnim("walkright");
@@ -27,7 +28,7 @@ Player::Player(int _x, int _y) :
 void Player::update(sf::Event& evt, float delta)
 {
 	anim.update(delta);
-
+	std::string s;
 	//handle movement
 	if(evt.type == sf::Event::KeyPressed)
 	{
@@ -41,9 +42,13 @@ void Player::update(sf::Event& evt, float delta)
 			break;
 		case sf::Keyboard::Left:
 			dir[2] = true;
+			if((s = anim.getCurrentAnim()) != "walkleft")
+				anim.setCurrentAnim("walkleft");
 			break;
 		case sf::Keyboard::Right:
 			dir[3] = true;
+			if((s = anim.getCurrentAnim()) != "walkright")
+				anim.setCurrentAnim("walkright");
 			break;
 		}
 	}
@@ -67,13 +72,26 @@ void Player::update(sf::Event& evt, float delta)
 		}
 	}
 
-	
-	if(dir[3] && onGround) body->SetLinearVelocity(b2Vec2(10.f, 0));
-	if(dir[2] && onGround) body->SetLinearVelocity(b2Vec2(-10.f, 0));
+	if(onGround && isJumping) isJumping = false;
+
+	if(dir[3] && onGround) body->SetLinearVelocity(b2Vec2(7.f, 0));
+	if(dir[2] && onGround) body->SetLinearVelocity(b2Vec2(-7.f, 0));
+	if(dir[0] && onGround && !isJumping)
+	{
+		body->ApplyLinearImpulse(b2Vec2(0.f, -0.4f), b2Vec2(body->GetWorldCenter().x, body->GetWorldCenter().y));
+		if(body->GetContactList() == NULL) onGround = false;
+		isJumping = true;
+
+	}
+
+	if(dir[3] && !onGround) body->ApplyLinearImpulse(b2Vec2(.1, 0), b2Vec2(body->GetWorldCenter().x, body->GetWorldCenter().y));
+	if(dir[2] && !onGround) body->ApplyLinearImpulse(b2Vec2(-.1, 0), b2Vec2(body->GetWorldCenter().x, body->GetWorldCenter().y));
 
 	//std::cout<<dir[0]<<" "<<dir[1]<<" "<<dir[2]<<" "<<dir[3]<<" "<<std::endl;
 	//handle shooting
-	
+	if(onGround) std::cout<<"onGround"<<std::endl;
+	if(!onGround) std::cout<<"inAir"<<std::endl;
+
 	anim.xpos = body->GetWorldCenter().x*scale - 20;
 	anim.ypos = body->GetWorldCenter().y*scale - 30;
 	
@@ -106,7 +124,7 @@ void Player::setb2Object(b2World* world, std::vector<b2Vec2> shape, int verticec
 	fd.shape = &pshape;
 	fd.density = density;
 	fd.friction = friction;
-	fd.userData = this;
+	fd.userData = (void*)1;
 	fd.filter.categoryBits = categoryBits;
 	fd.filter.maskBits = maskBits;
 	body->CreateFixture(&fd);
@@ -117,7 +135,7 @@ void Player::setSensor(b2World* world, uint16 categoryBits, uint16 maskBits)
 {
 
 	b2PolygonShape pshape;
-	pshape.SetAsBox(39.f/(2*scale), 5.f/(2*scale), b2Vec2(0, 30.f/scale), 0);
+	pshape.SetAsBox(39.f/(2*scale), 10.f/(2*scale), b2Vec2(0, 30.f/scale), 0);
 
 	b2FixtureDef fd;
 	fd.shape = &pshape;
@@ -127,7 +145,7 @@ void Player::setSensor(b2World* world, uint16 categoryBits, uint16 maskBits)
 	fd.isSensor = true;
 	fd.userData = this;
 	
-	body->CreateFixture(&fd);
+	sensor = body->CreateFixture(&fd);
 	body->SetUserData(this);
 }
 
