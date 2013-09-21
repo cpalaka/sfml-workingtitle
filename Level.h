@@ -10,7 +10,7 @@
 #include "MyContactListener.h"
 
 enum leveltype {Menu, Stage1};
-const b2Vec2 gravity(0.0f, 12.f);
+const b2Vec2 gravity(0.0f, 20.f);
 
 const static uint16 platform = 0x0001;
 const static uint16 playr =0x0002;
@@ -26,6 +26,7 @@ public:
 	void draw(sf::RenderWindow& window);
 	void setLevel(leveltype l); 
 	void update(double, sf::Event&, sf::View&);
+	void setCurrentWindow(sf::RenderWindow*);
 	leveltype ltype;
 private:
 	
@@ -35,6 +36,7 @@ private:
 	std::vector<staticEntity*> sentitylist;
 	std::vector<dynamicEntity*> dentitylist;
 	std::vector<Enemy*> enemylist;
+	sf::RenderWindow* currentWindow;
 	Player* player;
 	b2World* b2world;
 	MyContactListener myContactListener;

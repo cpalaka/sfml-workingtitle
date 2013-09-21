@@ -75,6 +75,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationObject.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="dynamicEntity.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -88,6 +89,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationObject.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="dynamicEntity.h" />
     <ClInclude Include="Enemy.h" />

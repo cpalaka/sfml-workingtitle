@@ -4,7 +4,8 @@ Game::Game()
 {
 	gameWindow.create(sf::VideoMode(windowX, windowY), "workingtitle");
 	currentlevel = new Level();
-	currentlevel->setLevel(Stage1);
+	currentlevel->setLevel(Menu);
+	currentlevel->setCurrentWindow(&gameWindow);
 	deltatime = 0;
 	view.reset(sf::FloatRect(0,0,660,450));
 	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));

@@ -46,6 +46,7 @@ void Level::setLevel(leveltype l)
 		player->setb2Object(b2world, v2, 4, 1.5f, 3.0f, true, playr, platform);
 
 		player->setSensor(b2world,playerSensor, platform|enemy);
+		player->setCurrentWindow(currentWindow);
 		b2world->SetContactListener(&myContactListener);
 		break;
 	}
@@ -102,4 +103,9 @@ void Level::draw(sf::RenderWindow& window)
 		}
 		player->Player::draw(window);
 	}
+}
+
+void Level::setCurrentWindow(sf::RenderWindow* window)
+{
+	currentWindow = window;
 }
