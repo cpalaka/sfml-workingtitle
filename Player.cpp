@@ -23,7 +23,7 @@ Player::Player(int _x, int _y) :
 
 	armtext.loadFromFile("resources/graphics/Player/arm.png");
 	armspr.setTexture(armtext);
-	armspr.setOrigin(7.f, 2.f);
+	armspr.setOrigin(5.f, 5.f);
 	anim.setCurrentAnim("walkright");
 }
 
@@ -58,7 +58,7 @@ void Player::update(sf::Event& evt, float delta)
 	if(evt.type == sf::Event::MouseMoved)
 	{
 		sf::Vector2i mousepos = sf::Mouse::getPosition(*currentWindow);
-		sf::Vector2i armcntr(anim.xpos+22, anim.ypos+25);
+		sf::Vector2i armcntr(330, 222);
 
 		float height = armcntr.y - mousepos.y;
 		float width = armcntr.x - mousepos.x;
@@ -66,11 +66,10 @@ void Player::update(sf::Event& evt, float delta)
 		if(width<0) width = -width;
 
 		float angle = atan(height/width)*180/PI;
-		if(mousepos.y > armcntr.y && mousepos.x > armcntr.y) armspr.setRotation(angle);
-		if(mousepos.y < armcntr.y && mousepos.x > armcntr.y) armspr.setRotation(360-angle);
-		if(mousepos.y < armcntr.y && mousepos.x < armcntr.y) armspr.setRotation(180+angle);
-		if(mousepos.y > armcntr.y && mousepos.x < armcntr.y) armspr.setRotation(180-angle);
-		//std::cout<<height<<" "<<width<<std::endl;
+		if(mousepos.y > armcntr.y && mousepos.x > armcntr.x) armspr.setRotation(angle);
+		if(mousepos.y < armcntr.y && mousepos.x > armcntr.x) armspr.setRotation(360-angle);
+		if(mousepos.y < armcntr.y && mousepos.x < armcntr.x) armspr.setRotation(180+angle);
+		if(mousepos.y > armcntr.y && mousepos.x < armcntr.x) armspr.setRotation(180-angle);
 		std::cout<<"armcenter: ("<<armcntr.x<<", "<<armcntr.y<<" mousepos: ("<<mousepos.x<<", "<<mousepos.y<<std::endl;
 	}
 

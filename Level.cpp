@@ -68,7 +68,7 @@ void Level::update(double delta, sf::Event& evt, sf::View& v)
 		//set view
 		//remember to change from first dynamic entity to the player position
 		
-		v.setCenter(player->anim.xpos+20, player->anim.ypos+30);
+		v.setCenter(player->anim.xpos+25, player->anim.ypos+30);
 
 		//iterate through dentity list and update
 		auto itr = dentitylist.begin();
