@@ -37,7 +37,7 @@ void dynamicEntity::setb2Object(b2World* world, std::vector<b2Vec2> shape, int v
 	fd.filter.categoryBits = categoryBits;
 	fd.filter.maskBits = maskBits;
 	body->CreateFixture(&fd);
-	body->SetUserData(this);
+	//body->SetUserData(this);
 }
 
 void dynamicEntity::update(double t)

@@ -7,6 +7,7 @@
 #include "AnimationObject.h"
 #include "Level.h"
 #include <chrono>
+#include "MyContactListener.h"
 
 const static int windowX = 660;
 const static int windowY = 450;
@@ -21,6 +22,6 @@ private:
 	sf::View view;
 	Level* currentlevel;
 	double deltatime;
-
+	MyContactListener* myContactListener;
 };
 

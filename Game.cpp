@@ -2,11 +2,12 @@
 
 Game::Game()
 {
+	myContactListener = new MyContactListener();
 	gameWindow.create(sf::VideoMode(windowX, windowY), "workingtitle");
-	currentlevel = new Level();
+	currentlevel = new Level(myContactListener);
 	currentlevel->setCurrentWindow(&gameWindow);
 	currentlevel->setLevel(Stage1);
-	
+	//myContactListener->SetLevel(currentlevel);
 	deltatime = 0;
 	view.reset(sf::FloatRect(0,0,660,450));
 	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
@@ -41,5 +42,6 @@ void Game::gameloop()
 	std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
 	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
 	deltatime = time_span.count()*1000;
+	//std::cout<<deltatime<<std::endl;
 	//deltatime = 1/60;
 }

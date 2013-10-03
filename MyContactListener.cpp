@@ -13,7 +13,7 @@ void MyContactListener::BeginContact(b2Contact* contact)
 		b2Fixture* fixA = contact->GetFixtureA();
 		b2Fixture* fixB = contact->GetFixtureB();
 
-		if(fixA->IsSensor())
+    	if(fixA->IsSensor())
 		{
 			Player* player = static_cast<Player*>(fixA->GetBody()->GetUserData());
 			player->onGround = true;
@@ -22,6 +22,17 @@ void MyContactListener::BeginContact(b2Contact* contact)
 		{
 			Player* player = static_cast<Player*>(fixB->GetBody()->GetUserData());
 			player->onGround = true;
+		}
+
+		if(fixA->GetUserData() == "bullet")
+		{
+			//levelinstance->removeBullet((int)fixA->GetBody()->GetUserData());
+		}
+
+		if(fixB->GetUserData() == "bullet")
+		{
+		
+			//levelinstance->removeBullet((int)fixB->GetBody()->GetUserData());
 		}
 	}
 }
@@ -40,20 +51,6 @@ void MyContactListener::EndContact(b2Contact* contact)
 		b2Fixture* fixB = contact->GetFixtureB();
 
 		void* bodyUserData; 
-		//player body fixture
-		/*
-		if((bodyUserData = fixA->GetUserData()) == (void *)1)
-		{
-			Player* p = static_cast<Player*>(fixA->GetBody()->GetUserData());
-			p->onGround = false;
-		}
-		
-		if((bodyUserData = fixB->GetUserData()) == (void* )1)
-		{
-			Player* p = static_cast<Player*>(fixB->GetBody()->GetUserData());
-			p->onGround = false;
-		}
-		*/
 		
 		if(fixA->IsSensor())
 		{
@@ -70,3 +67,9 @@ void MyContactListener::EndContact(b2Contact* contact)
 		
 	}
 }
+
+/*void MyContactListener::SetLevel(Level* level)
+{
+	levelinstance = level;
+}
+*/

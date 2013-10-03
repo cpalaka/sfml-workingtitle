@@ -3,7 +3,8 @@
 Player::Player(int _x, int _y) :
 	dynamicEntity("resources/graphics/Stage1/box.png", _x, _y),
 	onGround(false),
-	isJumping(false)
+	isJumping(false),
+	holdclick(false)
 {
 	dir[0] = false;
 	dir[1] = false;
@@ -27,10 +28,11 @@ Player::Player(int _x, int _y) :
 	anim.setCurrentAnim("walkright");
 }
 
-void Player::update(sf::Event& evt, float delta)
+float Player::update(sf::Event& evt, float delta)
 {
 	anim.update(delta);
 	std::string s;
+
 	//handle movement
 	if(evt.type == sf::Event::KeyPressed)
 	{
@@ -54,23 +56,20 @@ void Player::update(sf::Event& evt, float delta)
 			break;
 		}
 	}
-	
+	sf::Vector2i mousepos = sf::Mouse::getPosition(*currentWindow);
 	if(evt.type == sf::Event::MouseMoved)
 	{
-		sf::Vector2i mousepos = sf::Mouse::getPosition(*currentWindow);
+		//sf::Vector2i mousepos = sf::Mouse::getPosition(*currentWindow);
 		sf::Vector2i armcntr(330, 222);
 
-		float height = armcntr.y - mousepos.y;
-		float width = armcntr.x - mousepos.x;
-		if(height<0) height = -height;
-		if(width<0) width = -width;
+		float height = -1*(armcntr.y - mousepos.y);
+		float width = -1*(armcntr.x - mousepos.x);
 
-		float angle = atan(height/width)*180/PI;
-		if(mousepos.y > armcntr.y && mousepos.x > armcntr.x) armspr.setRotation(angle);
-		if(mousepos.y < armcntr.y && mousepos.x > armcntr.x) armspr.setRotation(360-angle);
-		if(mousepos.y < armcntr.y && mousepos.x < armcntr.x) armspr.setRotation(180+angle);
-		if(mousepos.y > armcntr.y && mousepos.x < armcntr.x) armspr.setRotation(180-angle);
-		std::cout<<"armcenter: ("<<armcntr.x<<", "<<armcntr.y<<" mousepos: ("<<mousepos.x<<", "<<mousepos.y<<std::endl;
+		float angle = atan(height/width)*180/b2_pi;
+		if (width < 0 )  angle = 180+angle;
+		if(mousepos.y < armcntr.y && mousepos.x > armcntr.x) angle = angle+360;
+		armspr.setRotation(angle);
+		mouseangle = angle;
 	}
 
 	if(evt.type == sf::Event::KeyReleased)
@@ -117,7 +116,6 @@ void Player::update(sf::Event& evt, float delta)
 	if(dir[3] && !onGround) if(vel.x < 4.f) body->ApplyLinearImpulse(b2Vec2(.1, 0), b2Vec2(body->GetWorldCenter().x, body->GetWorldCenter().y));
 	if(dir[2] && !onGround) if(vel.x > -4.f) body->ApplyLinearImpulse(b2Vec2(-.1, 0), b2Vec2(body->GetWorldCenter().x, body->GetWorldCenter().y));
 
-	//handle shooting
 	//if(onGround) std::cout<<"onGround"<<std::endl;
 	//if(!onGround) std::cout<<"inAir"<<std::endl;
 
@@ -125,6 +123,24 @@ void Player::update(sf::Event& evt, float delta)
 	anim.ypos = body->GetWorldCenter().y*scale - 30;
 
 	armspr.setPosition(anim.xpos+25, anim.ypos+22);
+
+	//if mouse is clicked
+	if(evt.type == sf::Event::MouseButtonPressed)
+	{
+		holdclick = true;//std::cout<<"("<<mousepos.x<<","<<mousepos.y<<")"<<std::endl;
+	}
+	if(evt.type == sf::Event::MouseButtonReleased)
+	{
+		holdclick = false;
+	}
+
+	if(holdclick)
+	{
+		return mouseangle;
+		
+	} else {
+		return -1;
+	}
 }
 
 void Player::setb2Object(b2World* world, std::vector<b2Vec2> shape, int verticecount, float friction, float density, bool rot, uint16 categoryBits, uint16 maskBits)
